@@ -12,7 +12,7 @@ export function generateStaticParams() {
 
 export default async function ChapterTemplatePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const chapterLabel = decodeURIComponent(slug).replace(/[-_]/g, " ").replace(/\\b\\w/g, (letter) => letter.toUpperCase());
+  const chapterLabel = decodeURIComponent(slug).replace(/[-_]/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
   return <>
     <Link href="/learn" className="back-link"><ArrowLeft size={15}/> Learning space</Link>
     <section className="chapter-template-hero"><div className="chapter-template-symbol">∑</div><div><span className="eyebrow">CHAPTER WORKSPACE TEMPLATE</span><h1>{chapterLabel || "New chapter"}</h1><p>This is a blank chapter template. No lesson text, formulas, examples or questions are attached.</p></div></section>
