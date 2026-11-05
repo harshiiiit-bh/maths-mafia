@@ -2,23 +2,32 @@
 
 A frontend-first Class 10 CBSE Mathematics learning platform.
 
-## Current scope
+## What's included
+- Premium landing page and independent Maths Mafia identity
+- Responsive student workspace with mobile navigation
+- Searchable, category-filterable 14-chapter catalogue
+- Chapter overview pages
+- Interactive sample quiz with feedback and result summary
+- Test centre, study library, progress, leaderboard and profile screens
+- Light/dark theme toggle
+- GitHub Actions checks for tests, types and production build
 
-This repository is focused on product design and frontend experience only. Educational notes, question banks, student accounts, databases, payments, and live leaderboard data will be added in later phases.
+## Phase 1 boundaries
+All questions, names, scores and learning activity are demonstration data. There is no database, authentication, payments or live user tracking. Study notes, questions and PYQs will be integrated when supplied.
 
-## Brand boundary
+Maths Mafia is a separate product. It does not use VAANI branding, characters, logos or assets.
 
-Maths Mafia is an independent product. It does not use VAANI branding, characters, assets, or product features.
-
-## Development
-
-The app is built with Next.js, React, TypeScript, Tailwind CSS, and Lucide icons.
-
-Run locally with:
-
+## Run locally
+Requires Node.js 20.9 or newer.
 ```bash
 npm install
 npm run dev
 ```
-
 Open http://localhost:3000.
+
+## Checks
+```bash
+npm test
+npm run typecheck
+npm run build
+```
