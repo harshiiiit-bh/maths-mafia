@@ -25,6 +25,6 @@ test("rejects division by zero and unknown symbols", () => {
 
 test("rejects malformed expressions and unsafe input", () => {
   assert.throws(() => evaluateExpression("2 + (3"), /parentheses|incomplete/i);
-  assert.throws(() => evaluateExpression("globalThis.alert(1)"), /Unknown symbol|Unexpected token/);
+  assert.throws(() => evaluateExpression("globalThis.alert(1)"), /Unsupported character/);
   assert.throws(() => evaluateExpression("1;alert(1)"), /Unsupported character/);
 });

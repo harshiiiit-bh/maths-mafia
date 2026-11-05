@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import { evaluateExpression } from "@/lib/math-engine";
-import { ArrowLeft, ArrowRight, Check, ChevronDown, CircleHelp, Clock3, Copy, Eraser, Pause, Play, RotateCcw, Square, Trash2 } from "lucide-react";
+import { evaluateExpression } from "@/lib/math-engine.mjs";
+import { ArrowLeft, ArrowRight, Check, CircleHelp, Clock3, Eraser, Pause, Play, RotateCcw, Trash2 } from "lucide-react";
 
 type LabTab = "calculator" | "graph" | "timer" | "scratchpad";
 
@@ -54,13 +54,12 @@ function FunctionPlotter(){
  function validate(){try{evaluateExpression(expression,{x:1},"rad");setError("");}catch(reason){setError(reason instanceof Error?reason.message:"Expression is not valid.");}}
  return <div className="lab-panel plotter-panel">
   <div className="lab-panel-heading"><div><span className="eyebrow">FUNCTION PLOTTER</span><h2>See the shape of a function.</h2><p>Enter an expression in x. The graph is generated from your input.</p></div></div>
-  <div className="plotter-controls"><label><span>y =</span><input value={expression} onChange={event=>{setExpression(event.target.value);setError("");}} onKeyDown={event=>{if(event.key==="Enter")validate();}} placeholder="Enter an expression using x"/></label><button className="button button-primary" onClick={validate}>Plot function <ChartSplineIcon/></button><button className="button button-outline" onClick={()=>{setExpression("");setError("");}}>Clear</button></div>
+  <div className="plotter-controls"><label><span>y =</span><input value={expression} onChange={event=>{setExpression(event.target.value);setError("");}} onKeyDown={event=>{if(event.key==="Enter")validate();}} placeholder="Enter an expression using x"/></label><button className="button button-primary" onClick={validate}>Plot function <span className="chart-spline-mark">⌁</span></button><button className="button button-outline" onClick={()=>{setExpression("");setError("");}}>Clear</button></div>
   {error?<p className="plotter-error">{error}</p>:null}
-  <div className="plotter-graph"><svg viewBox="0 0 600 420" role="img" aria-label="Function graph area"><defs><pattern id="math-grid" width="30" height="20" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeOpacity=".09" strokeWidth="1"/></pattern></defs><rect width="600" height="420" fill="url(#math-grid)"/><path d="M0 210 H600 M300 0 V420" stroke="currentColor" strokeOpacity=".35" strokeWidth="1.4"/><path d="M300 0 l-5 8 m5-8 l5 8 M600 210 l-8 -5 m8 5 l-8 5" fill="none" stroke="currentColor" strokeOpacity=".5"/>{path?<path d={path} fill="none" stroke="#8273ef" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>:null}<text x="586" y="199" fill="currentColor" opacity=".6" fontSize="12">x</text><text x="311" y="14" fill="currentColor" opacity=".6" fontSize="12">y</text></svg>{!expression.trim()?<div className="plotter-empty"><ChartSplineIcon/><strong>Your graph will appear here.</strong><span>Nothing is plotted until you enter a function.</span></div>:null}</div>
+  <div className="plotter-graph"><svg viewBox="0 0 600 420" role="img" aria-label="Function graph area"><defs><pattern id="math-grid" width="30" height="20" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 20" fill="none" stroke="currentColor" strokeOpacity=".09" strokeWidth="1"/></pattern></defs><rect width="600" height="420" fill="url(#math-grid)"/><path d="M0 210 H600 M300 0 V420" stroke="currentColor" strokeOpacity=".35" strokeWidth="1.4"/><path d="M300 0 l-5 8 m5-8 l5 8 M600 210 l-8 -5 m8 5 l-8 5" fill="none" stroke="currentColor" strokeOpacity=".5"/>{path?<path d={path} fill="none" stroke="#8273ef" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>:null}<text x="586" y="199" fill="currentColor" opacity=".6" fontSize="12">x</text><text x="311" y="14" fill="currentColor" opacity=".6" fontSize="12">y</text></svg>{!expression.trim()?<div className="plotter-empty"><span className="chart-spline-mark">⌁</span><strong>Your graph will appear here.</strong><span>Nothing is plotted until you enter a function.</span></div>:null}</div>
   <div className="plotter-foot"><span>View window: −10 to 10 on both axes</span><span>Expression parser · No data storage</span></div>
  </div>;
 }
-function ChartSplineIcon(){return <span className="chart-spline-mark">⌁</span>;}
 
 function FocusTimer(){
  const [minutes,setMinutes]=useState(25);
@@ -84,12 +83,11 @@ function Scratchpad(){
  const [text,setText]=useState("");
  const [fontSize,setFontSize]=useState("normal");
  return <div className="lab-panel scratchpad-panel"><div className="lab-panel-heading"><div><span className="eyebrow">QUICK SCRATCHPAD</span><h2>Think on the page.</h2><p>A temporary writing area for working through your own ideas.</p></div><button className="button button-outline" onClick={()=>setText("")}><Trash2 size={14}/> Clear page</button></div>
-  <div className="scratchpad-toolbar"><span><PencilLineIcon/> Untitled scratchpad</span><div><button className={fontSize==="normal"?"selected":""} onClick={()=>setFontSize("normal")}>A</button><button className={fontSize==="large"?"selected":""} onClick={()=>setFontSize("large")}>A+</button></div></div>
+  <div className="scratchpad-toolbar"><span><span className="pencil-mark">✎</span> Untitled scratchpad</span><div><button className={fontSize==="normal"?"selected":""} onClick={()=>setFontSize("normal")}>A</button><button className={fontSize==="large"?"selected":""} onClick={()=>setFontSize("large")}>A+</button></div></div>
   <textarea className={"scratchpad-input scratchpad-"+fontSize} value={text} onChange={event=>setText(event.target.value)} placeholder="Write, calculate, sketch out a proof in words…"/>
   <div className="scratchpad-footer"><span>{text.length} characters · Current session only</span><span>Not saved or uploaded</span></div>
  </div>;
 }
-function PencilLineIcon(){return <span className="pencil-mark">✎</span>;}
 
 export function PracticeSetup(){
  const [format,setFormat]=useState("Multiple choice");

@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Bell, BookOpen, Brain, Calculator, BarChart3, ChevronDown, ChevronRight, Command, Flame, Home, Library, Menu, Moon, Search, Settings, Sun, Target, Trophy, UserRound, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
@@ -25,6 +25,14 @@ export function AppShell({children}:{children:ReactNode}){
  const [dark,setDark]=useState(false);
  const active=allItems.find(item=>pathname===item.href||(item.href!=="/dashboard"&&pathname.startsWith(item.href+"/")));
  const results=useMemo(()=>allItems.filter(item=>!query.trim()||item.label.toLowerCase().includes(query.trim().toLowerCase())),[query]);
+ useEffect(()=>{
+  function handleKeys(event:KeyboardEvent){
+   if((event.metaKey||event.ctrlKey)&&event.key.toLowerCase()==="k"){event.preventDefault();setSearchOpen(true);}
+   if(event.key==="Escape"){setSearchOpen(false);setNoticeOpen(false);setMobileNav(false);}
+  }
+  window.addEventListener("keydown",handleKeys);
+  return()=>window.removeEventListener("keydown",handleKeys);
+ },[]);
  function toggleTheme(){const next=!dark;setDark(next);document.documentElement.dataset.theme=next?"dark":"light";}
  return <div className="workspace">
   {mobileNav?<button className="mobile-scrim" aria-label="Close navigation" onClick={()=>setMobileNav(false)}/>:null}
