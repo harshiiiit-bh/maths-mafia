@@ -1,9 +1,18 @@
 import Link from "next/link";
-import { ArrowLeft, BookOpen, FilePlus2, Lightbulb, ListTree, Sparkles } from "lucide-react";
+import { ArrowLeft, FilePlus2, Lightbulb, ListTree, Sparkles } from "lucide-react";
+
+// GitHub Pages serves a static export, so the blank chapter template is
+// generated explicitly. Real chapter slugs can be added when study material
+// is supplied; no sample chapter content is created here.
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [{ slug: "chapter-template" }];
+}
 
 export default async function ChapterTemplatePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const chapterLabel = decodeURIComponent(slug).replace(/[-_]/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  const chapterLabel = decodeURIComponent(slug).replace(/[-_]/g, " ").replace(/\\b\\w/g, (letter) => letter.toUpperCase());
   return <>
     <Link href="/learn" className="back-link"><ArrowLeft size={15}/> Learning space</Link>
     <section className="chapter-template-hero"><div className="chapter-template-symbol">∑</div><div><span className="eyebrow">CHAPTER WORKSPACE TEMPLATE</span><h1>{chapterLabel || "New chapter"}</h1><p>This is a blank chapter template. No lesson text, formulas, examples or questions are attached.</p></div></section>
