@@ -1,22 +1,37 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, Brain, CalendarDays, Check, Clock3, Flame, Sparkles, Target, Trophy, Zap } from "lucide-react";
-import { PageHeading, SectionHeading } from "@/components/section-heading";
-import { ProgressBar } from "@/components/progress-bar";
-import { chapters } from "@/lib/catalog";
-const activity = [34,55,28,68,44,82,39];
+import { ArrowUpRight, BookOpen, Brain, Calculator, Clock3, Library, LineChart, Sparkles, Target } from "lucide-react";
+import { PageHeading } from "@/components/section-heading";
+
+const spaces = [
+  { href:"/learn", icon:BookOpen, title:"Learning space", detail:"A clear home for chapters and lessons.", label:"CONTENT NOT ADDED", tone:"violet" },
+  { href:"/practice", icon:Brain, title:"Practice studio", detail:"Choose a practice format and prepare a session.", label:"READY FOR QUESTIONS", tone:"mint" },
+  { href:"/tests", icon:Target, title:"Exam workspace", detail:"Configure an exam layout before adding a paper.", label:"NO PAPERS ADDED", tone:"orange" },
+  { href:"/library", icon:Library, title:"Study library", detail:"A home for notes, formulas and resources.", label:"LIBRARY EMPTY", tone:"blue" },
+  { href:"/progress", icon:LineChart, title:"Progress centre", detail:"A future view of learning activity and goals.", label:"NO ACTIVITY YET", tone:"pink" }
+];
+
 export default function DashboardPage() {
- const active = chapters[1];
- return <>
-  <PageHeading eyebrow="YOUR NEXT WIN IS WAITING" title="Make today count." description="A little progress today adds up to a lot of confidence tomorrow." action={<button className="button button-outline"><CalendarDays size={16}/> This week</button>}/>
-  <section className="dashboard-hero"><div className="dashboard-hero-content"><span className="hero-label"><Sparkles size={14}/> YOUR LEARNING SPACE</span><h2>Stay curious.<br/><span>Keep getting better.</span></h2><p>You're on a 4-day streak. One focused session today keeps your momentum alive.</p><Link href="/learn" className="button button-lime">Continue learning <ArrowRight size={16}/></Link></div><div className="dashboard-hero-art"><span className="hero-orbit hero-orbit-one"/><span className="hero-orbit hero-orbit-two"/><span className="hero-sigma">∑</span><span className="hero-pi">π</span><span className="hero-root">√x</span></div><div className="hero-card-note"><span>01</span><div><strong>One step at a time</strong><small>Progress over perfection.</small></div></div></section>
-  <div className="stat-grid"><div className="stat-card"><div><span>Study streak</span><i className="stat-orange"><Flame size={18}/></i></div><strong>4 <small>days</small></strong><p>You're showing up.</p></div><div className="stat-card"><div><span>Total experience</span><i className="stat-violet"><Zap size={18}/></i></div><strong>1,280 <small>XP</small></strong><p>+120 XP this week</p></div><div className="stat-card"><div><span>Time invested</span><i className="stat-blue"><Clock3 size={18}/></i></div><strong>6h 40m</strong><p>Across 12 sessions</p></div><div className="stat-card"><div><span>Practice accuracy</span><i className="stat-mint"><Target size={18}/></i></div><strong>82<small>%</small></strong><p>Up 6% this month</p></div></div>
-  <div className="dashboard-grid"><div className="dashboard-primary">
-   <section className="surface-card"><SectionHeading title="Pick up where you left off" description="Your current learning chapter" action={<Link href="/learn" className="text-link">All chapters <ArrowUpRight size={14}/></Link>}/><div className="continue-card"><div className="continue-art"><span>CHAPTER 02</span><strong>x² + bx + c</strong><i/><b/></div><div className="continue-body"><span className="status-pill">IN PROGRESS</span><h3>{active.title}</h3><p>{active.subtitle}. Discover how zeroes connect to coefficients.</p><div className="continue-meta"><span><BookOpen size={14}/>{active.topics} topics</span><span><Clock3 size={14}/>{active.minutes} min</span></div><ProgressBar value={active.progress}/><div className="continue-bottom"><span>{active.progress}% complete</span><Link className="button button-primary button-small" href={"/learn/"+active.slug}>Continue <ArrowRight size={14}/></Link></div></div></div></section>
-   <section className="surface-card"><SectionHeading title="Your week in focus" description="Minutes spent learning each day" action={<span className="chart-period">LAST 7 DAYS</span>}/><div className="activity-chart"><div className="chart-y"><span>90m</span><span>60m</span><span>30m</span><span>0</span></div><div className="chart-bars">{activity.map((value,i)=><div className="chart-col" key={i}><div className="chart-track"><span className={i===5?"chart-fill chart-fill-highlight":"chart-fill"} style={{height:value+"%"}}/></div><small>{"MTWTFSS"[i]}</small></div>)}</div></div><div className="chart-footer"><span><i/> Your study time</span><strong>350 min <small>this week</small></strong></div></section>
-  </div><aside className="dashboard-secondary">
-   <section className="surface-card"><SectionHeading title="Weekly goal" description="You're closer than you think."/><div className="goal-content"><div className="goal-ring"><div><strong>68%</strong><small>DONE</small></div></div><div><strong>4h 05m <small>/ 6h</small></strong><p>2 sessions to hit your goal.</p></div></div><ProgressBar value={68} tone="mint"/><div className="goal-foot"><span><Check size={14}/> Looking good</span><span>ON TRACK</span></div></section>
-   <section className="surface-card"><SectionHeading title="Jump back in" description="A shortcut to your next session."/><div className="shortcut-list"><Link href="/practice"><i className="shortcut-violet"><Brain size={18}/></i><span><strong>Practice questions</strong><small>Warm up your brain</small></span><ArrowUpRight size={16}/></Link><Link href="/tests"><i className="shortcut-orange"><Target size={18}/></i><span><strong>Try a mock test</strong><small>Check your readiness</small></span><ArrowUpRight size={16}/></Link><Link href="/progress"><i className="shortcut-mint"><Trophy size={18}/></i><span><strong>View your progress</strong><small>See how far you've come</small></span><ArrowUpRight size={16}/></Link></div></section>
-   <div className="focus-note"><span>✳</span><div><strong>A thought to keep</strong><p>Don't count the problems you solve. Notice the ideas you understand.</p></div></div>
-  </aside></div><div className="demo-disclaimer"><Sparkles size={15}/> Dashboard figures are sample data for the frontend preview.</div>
- </>;
+  return <>
+    <PageHeading eyebrow="YOUR MATHEMATICS WORKSPACE" title="Make room for big ideas." description="Your study space is ready. Add learning material later; for now, explore the tools and shape your workflow." />
+    <section className="dashboard-hero">
+      <div className="dashboard-hero-content">
+        <span className="hero-label"><Sparkles size={14}/> MATHS MAFIA · WORKSPACE</span>
+        <h2>Think clearly.<br/><span>Work it out.</span></h2>
+        <p>A focused space for learning, practice and mathematical exploration. No sample content has been loaded.</p>
+        <Link href="/math-lab" className="button button-lime">Open Math Lab <ArrowUpRight size={16}/></Link>
+      </div>
+      <div className="dashboard-hero-art" aria-hidden="true"><span className="hero-orbit hero-orbit-one"/><span className="hero-orbit hero-orbit-two"/><span className="hero-sigma">∑</span><span className="hero-pi">π</span><span className="hero-root">√x</span></div>
+      <div className="hero-card-note"><span>✳</span><div><strong>Your space, your pace</strong><small>Start with a tool. Add content when ready.</small></div></div>
+    </section>
+
+    <div className="dashboard-tools">
+      <Link href="/math-lab" className="tool-launch-card tool-launch-featured"><span className="tool-launch-icon"><Calculator size={21}/></span><span className="eyebrow">INTERACTIVE TOOLKIT</span><strong>Math Lab</strong><small>Calculator · Graph plotter · Focus timer · Scratchpad</small><span className="tool-launch-link">Explore tools <ArrowUpRight size={15}/></span></Link>
+      <Link href="/practice" className="tool-launch-card"><span className="tool-launch-icon tool-icon-mint"><Brain size={20}/></span><span className="eyebrow">SESSION SETUP</span><strong>Practice studio</strong><small>Choose a format and prepare your workspace.</small><span className="tool-launch-link">Open setup <ArrowUpRight size={15}/></span></Link>
+      <Link href="/tests" className="tool-launch-card"><span className="tool-launch-icon tool-icon-orange"><Target size={20}/></span><span className="eyebrow">EXAM BUILDER</span><strong>Test workspace</strong><small>Configure a timed or untimed exam layout.</small><span className="tool-launch-link">Open builder <ArrowUpRight size={15}/></span></Link>
+    </div>
+
+    <div className="section-heading dashboard-section-heading"><div><span className="eyebrow">YOUR PRODUCT AREAS</span><h2>Everything has a place.</h2><p>These spaces are designed and ready for your material.</p></div></div>
+    <div className="dashboard-space-grid">{spaces.map((space)=>{const Icon=space.icon;return <Link href={space.href} className="dashboard-space-card" key={space.href}><span className={"space-icon space-"+space.tone}><Icon size={19}/></span><span className="space-label">{space.label}</span><strong>{space.title}</strong><p>{space.detail}</p><span className="space-open">Open space <ArrowUpRight size={14}/></span></Link>;})}</div>
+    <div className="no-data-note"><Sparkles size={16}/><span><strong>Clean foundation.</strong> No sample questions, chapter content, students, scores or progress records are included. Your material will be added when you provide it.</span></div>
+  </>;
 }

@@ -1,11 +1,19 @@
-import Link from "next/link";
-import { ArrowUpRight, Bell, CalendarDays, Flame, Globe2, Moon, ShieldCheck, Sparkles, Target, UserRound } from "lucide-react";
+"use client";
+import { useState } from "react";
+import { Bell, Check, Globe2, Moon, Palette, Settings2, ShieldCheck, Sun } from "lucide-react";
 import { PageHeading } from "@/components/section-heading";
-export const metadata = { title: "My profile" };
+
 export default function ProfilePage() {
- return <><PageHeading eyebrow="YOUR SPACE, YOUR PACE" title="Your profile." description="A preview of the personal space where learning preferences and achievements will live." action={<span className="status-pill">PREVIEW PROFILE</span>}/>
-  <section className="profile-hero surface-card"><div className="profile-avatar">ME</div><div className="profile-identity"><span className="eyebrow">MATHS MAFIA MEMBER</span><h2>Maths explorer</h2><p>Curious mind · Level 08 · Problem solver</p><div className="profile-tags"><span><Flame size={14}/> 4-day streak</span><span><Sparkles size={14}/> 1,280 XP</span><span><CalendarDays size={14}/> Learning since 2026</span></div></div><Link href="/progress" className="button button-outline">View progress <ArrowUpRight size={15}/></Link></section>
-  <div className="profile-grid"><section className="surface-card"><div className="section-heading"><div><span className="eyebrow">YOUR LEARNING PREFERENCES</span><h2>Make the space yours.</h2><p>These settings preview future account controls.</p></div></div><div className="settings-list"><div><span><UserRound size={17}/></span><div><strong>Profile details</strong><small>Display name and learning identity</small></div><em>Preview</em></div><div><span><Bell size={17}/></span><div><strong>Study reminders</strong><small>Choose when a gentle nudge appears</small></div><em>6:00 PM</em></div><div><span><Moon size={17}/></span><div><strong>Appearance</strong><small>Switch between light and dark themes</small></div><em>Use top bar</em></div><div><span><Globe2 size={17}/></span><div><strong>Language</strong><small>Preferred learning language</small></div><em>English</em></div></div></section>
-   <aside className="profile-side"><div><ShieldCheck size={21}/><h3>Your learning space.</h3><p>When accounts are added, this page will become home for personal settings and privacy controls.</p></div><div><Target size={21}/><h3>Keep your goals close.</h3><p>Explore your learning path and weekly focus.</p><Link href="/progress">View progress <ArrowUpRight size={14}/></Link></div></aside></div>
+ const [theme,setTheme] = useState("light");
+ const [reminders,setReminders] = useState(false);
+ const [language,setLanguage] = useState("English");
+ function changeTheme(value:string){setTheme(value);document.documentElement.dataset.theme=value;}
+ return <>
+  <PageHeading eyebrow="WORKSPACE PREFERENCES" title="Settings and preferences." description="Choose how the interface behaves. These preferences are local to this page and are not saved to an account."/>
+  <div className="settings-layout"><section className="surface-card"><div className="section-heading"><div><span className="eyebrow">APPEARANCE</span><h2>Make the workspace comfortable.</h2><p>Preview interface preferences without creating a profile.</p></div></div>
+   <div className="settings-control-row"><span className="settings-control-icon"><Palette size={18}/></span><div><strong>Theme</strong><small>Choose the visual appearance.</small></div><div className="theme-choice"><button className={theme==="light"?"selected":""} onClick={()=>changeTheme("light")}><Sun size={14}/> Light</button><button className={theme==="dark"?"selected":""} onClick={()=>changeTheme("dark")}><Moon size={14}/> Dark</button></div></div>
+   <div className="settings-control-row"><span className="settings-control-icon"><Bell size={18}/></span><div><strong>Study reminders</strong><small>UI preference only; no notifications are sent.</small></div><button className={"toggle-switch"+(reminders?" toggle-on":"")} role="switch" aria-checked={reminders} onClick={()=>setReminders(!reminders)}><i/></button></div>
+   <div className="settings-control-row"><span className="settings-control-icon"><Globe2 size={18}/></span><div><strong>Interface language</strong><small>Choose the language label for this preview.</small></div><select value={language} onChange={event=>setLanguage(event.target.value)}><option>English</option><option>Hindi</option></select></div>
+  </section><aside className="settings-info-card"><ShieldCheck size={22}/><h3>No account is connected.</h3><p>This screen does not collect a name, email, profile image or personal learning record. Preferences remain temporary in the current page state.</p><div><Settings2 size={15}/> Frontend-only settings</div></aside></div>
  </>;
 }

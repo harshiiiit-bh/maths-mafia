@@ -1,14 +1,12 @@
-import ranking from "@/data/leaderboard.json";
-import { Crown, Flame, Medal, Sparkles, Trophy, Zap } from "lucide-react";
+import { Crown, Medal, Trophy, Users } from "lucide-react";
 import { PageHeading } from "@/components/section-heading";
-type Entry = (typeof ranking)[number];
-const entries = ranking as Entry[];
+
 export const metadata = { title: "Leaderboard" };
+
 export default function LeaderboardPage() {
- return <><PageHeading eyebrow="A LITTLE FRIENDLY COMPETITION" title="The hall of progress." description="A celebration of consistency, curiosity and the effort behind every solved problem." action={<span className="status-pill">SAMPLE RANKINGS</span>}/>
-  <div className="leaderboard-banner"><div><span className="eyebrow">THIS WEEK'S TOP LEARNERS</span><h2>Progress looks good on everyone.</h2><p>These sample rankings preview a future community feature.</p></div><Trophy size={48}/></div>
-  <div className="leaderboard-layout"><section className="surface-card"><div className="leaderboard-heading"><div><strong>Weekly leaderboard</strong><small>Fictional student activity · Preview</small></div><span>THIS WEEK</span></div><div className="leaderboard-podium">{entries.slice(0,3).map((item,i)=><div className={"podium-person podium-"+(i+1)} key={item.rank}><div className={"avatar avatar-"+item.tone}>{item.initials}</div><span className="podium-medal">{i===0?<Crown size={16}/>:<Medal size={16}/>}</span><strong>{item.name}</strong><small>{item.xp.toLocaleString("en-IN")} XP</small><div className="podium-step">{item.rank}</div></div>)}</div><div className="rank-list">{entries.slice(3).map((item)=><div className="rank-row" key={item.rank}><span>{item.rank}</span><span className={"avatar avatar-"+item.tone}>{item.initials}</span><span className="rank-name"><strong>{item.name}</strong><small>{item.handle}</small></span><strong>{item.xp.toLocaleString("en-IN")} XP</strong></div>)}</div></section>
-   <aside className="leaderboard-aside"><div><Flame size={20}/><strong>Consistency wins.</strong><p>Small study sessions, repeated over time, add up to something powerful.</p></div><div><Zap size={20}/><strong>Earn experience.</strong><p>Future XP will come from lessons, practice and learning milestones.</p></div></aside></div>
-  <div className="demo-disclaimer"><Sparkles size={15}/> Names and scores are fictional preview data, not live rankings.</div>
+ return <>
+  <PageHeading eyebrow="COMMUNITY SPACE" title="Leaderboard." description="A future community ranking interface. No student accounts, names, XP or ranking records are included." action={<span className="status-pill">NO USER DATA</span>}/>
+  <section className="leaderboard-banner"><div><span className="eyebrow">CELEBRATE THE EFFORT</span><h2>Make progress your own.</h2><p>The podium and ranking list will appear when real participants and consent-based activity are connected.</p></div><Trophy size={49}/></section>
+  <section className="surface-card leaderboard-empty"><div className="leaderboard-empty-podium"><span><Medal size={23}/></span><span><Crown size={28}/></span><span><Medal size={23}/></span></div><span className="eyebrow">RANKINGS NOT AVAILABLE</span><h2>No rankings yet.</h2><p>There are no users or scores in this project. This screen is only the leaderboard design.</p><div className="leaderboard-empty-foot"><Users size={15}/> Waiting for a real community</div></section>
  </>;
 }

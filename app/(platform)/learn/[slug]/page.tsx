@@ -1,14 +1,15 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Clock3, Lightbulb, Play, Sparkles, Target } from "lucide-react";
-import { chapters, getChapter } from "@/lib/catalog";
-import { ProgressBar } from "@/components/progress-bar";
-export function generateStaticParams() { return chapters.map((chapter) => ({ slug: chapter.slug })); }
-export default async function ChapterPage({ params }: { params: Promise<{ slug: string }> }) {
- const { slug } = await params; const chapter = getChapter(slug); if (!chapter) notFound();
- const next = chapters.find((item) => item.number === chapter.number + 1);
- return <><Link href="/learn" className="back-link"><ArrowLeft size={15}/> All chapters</Link>
-  <section className="chapter-detail-hero"><div className={"chapter-detail-art chapter-art-"+chapter.accent}><span>CHAPTER {String(chapter.number).padStart(2,"0")}</span><strong>{chapter.formula}</strong><i/></div><div className="chapter-detail-copy"><span className="eyebrow">CLASS 10 MATHEMATICS · {chapter.category.toUpperCase()}</span><h1>{chapter.title}</h1><p>{chapter.description}</p><div className="chapter-detail-meta"><span><BookOpen size={15}/>{chapter.topics} topics</span><span><Clock3 size={15}/>{chapter.minutes} min</span><span><Target size={15}/>{chapter.progress}% progress</span></div><ProgressBar value={chapter.progress}/><div className="chapter-detail-actions"><Link href="/practice" className="button button-primary"><Play size={15}/> Start sample practice</Link><Link href="/tests" className="button button-outline">View tests <ArrowRight size={15}/></Link></div></div></section>
-  <div className="chapter-content-grid"><section className="surface-card"><div className="section-heading"><div><span className="eyebrow">YOUR LEARNING PATH</span><h2>Topics in this chapter</h2><p>A sample structure. Your study notes will be added later.</p></div></div><div className="topic-list">{Array.from({length:chapter.topics},(_,i)=><div className="topic-row" key={i}><span className="topic-index">{String(i+1).padStart(2,"0")}</span><div><strong>{["Core concepts and intuition","Key definitions and properties","Worked examples","Methods and applications","Practice and revision","Chapter checkpoint","Challenge questions"][i%7]}</strong><small>Lesson preview · Content will be supplied later</small></div><span className="topic-status">{i===0&&chapter.progress>0?<CheckCircle2 size={17}/>:<Play size={14}/>}</span></div>)}</div></section>
-  <aside className="chapter-aside"><div className="formula-card"><span><Sparkles size={15}/> FORMULA SPOTLIGHT</span><strong>{chapter.formula}</strong><p>A useful relationship to keep in mind as you explore this chapter.</p></div><div className="tip-card"><Lightbulb size={19}/><h3>Learn for understanding</h3><p>Try to explain each idea in your own words before moving to the next topic.</p></div>{next?<Link href={"/learn/"+next.slug} className="next-chapter-card"><span>NEXT CHAPTER</span><strong>{next.title}</strong><span>Keep exploring <ArrowRight size={14}/></span></Link>:null}</aside></div></>;
+import { ArrowLeft, BookOpen, FilePlus2, Lightbulb, ListTree, Sparkles } from "lucide-react";
+
+export default async function ChapterTemplatePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const chapterLabel = decodeURIComponent(slug).replace(/[-_]/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+  return <>
+    <Link href="/learn" className="back-link"><ArrowLeft size={15}/> Learning space</Link>
+    <section className="chapter-template-hero"><div className="chapter-template-symbol">∑</div><div><span className="eyebrow">CHAPTER WORKSPACE TEMPLATE</span><h1>{chapterLabel || "New chapter"}</h1><p>This is a blank chapter template. No lesson text, formulas, examples or questions are attached.</p></div></section>
+    <div className="chapter-template-grid">
+      <section className="surface-card"><span className="eyebrow">LESSON STRUCTURE</span><h2>Topic outline</h2><p className="muted-copy">The lesson list will appear here after chapter material is supplied.</p><div className="empty-inline"><ListTree size={22}/><strong>No topics added</strong><span>Topic cards and lesson navigation are ready for content.</span></div></section>
+      <aside className="chapter-aside"><div className="tip-card"><Lightbulb size={19}/><h3>Designed for understanding</h3><p>Future lessons can combine explanations, diagrams, interactive examples and practice activities.</p></div><div className="empty-tool-card"><FilePlus2 size={20}/><strong>Material slot</strong><span>Notes and questions will be connected here later.</span><Sparkles size={16}/></div></aside>
+    </div>
+  </>;
 }

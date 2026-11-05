@@ -1,22 +1,27 @@
-# Maths Mafia — Phase 1 frontend
+# Maths Mafia — Phase 1 frontend and tools
 
-## Intent
-Create a complete responsive frontend for a CBSE Class 10 Mathematics learning platform. This phase is intentionally limited to product design, navigation, responsive UI and client-side demonstrations.
+## Goal
+Build the full product experience and useful client-side maths tools before supplying any educational content.
 
-## Boundaries
-- Independent Maths Mafia identity. VAANI branding, characters, artwork and assets are not part of the product.
-- No backend, database, authentication, payments, or live student tracking.
-- Dashboard metrics, practice questions, profile details and leaderboard records are sample data.
-- The owner will provide notes, questions and PYQs later.
+## Identity
+Independent Maths Mafia visual identity. No VAANI assets, names, characters or product features.
 
-## Design
-Warm off-white canvas, deep ink navigation, violet primary accent and lime highlights. Use spacious layouts, clear typography, restrained gradients and geometric mathematics-inspired illustration.
+## Content boundary
+There are no seeded chapters, lesson text, formulas, solved examples, quizzes, question papers, notes, sample users, scores, progress or leaderboard rows. Pages display explicit empty states. Content will be supplied by the owner in a later phase.
+
+## Working features
+- Responsive workspace navigation and page search.
+- Light/dark theme selection.
+- Scientific calculator with a bounded expression parser; no eval or dynamic code execution.
+- Function plotter using user-entered expressions.
+- Focus timer with selectable presets.
+- Temporary scratchpad that is not persisted.
+- Practice session setup controls with a blank question canvas.
+- Exam setup controls with a blank exam canvas.
+- Workspace preferences that remain in local component state.
 
 ## Routes
-/, /dashboard, /learn, /learn/[slug], /practice, /tests, /library, /progress, /leaderboard and /profile.
+/, /dashboard, /learn, /learn/[slug], /practice, /tests, /library, /progress, /leaderboard, /profile and /math-lab.
 
-## Interactions
-Responsive mobile navigation, page search, light/dark theme switch, chapter search and category filter, sample multiple-choice quiz with explanations and results.
-
-## Quality
-Strict TypeScript, keyboard-friendly controls, reduced-motion support, catalogue tests, CI type-check and production build.
+## Non-goals
+No backend, account system, API, database, cloud storage, content management, real analytics, payments or deployment in this phase.

@@ -1,15 +1,20 @@
-import { BookOpen, Clock3, Layers3, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { ArrowUpRight, BookOpen, FolderPlus, Search, Sparkles } from "lucide-react";
 import { PageHeading } from "@/components/section-heading";
-import { ChapterExplorer } from "@/components/chapter-explorer";
-import { chapters } from "@/lib/catalog";
-export const metadata = { title: "Explore chapters" };
+
+export const metadata = { title: "Learning space" };
+
 export default function LearnPage() {
- const done = chapters.filter((c) => c.progress === 100).length;
- const active = chapters.filter((c) => c.progress > 0 && c.progress < 100).length;
- return <><PageHeading eyebrow="THE CLASS 10 PLAYBOOK" title="Explore mathematics." description="Fourteen chapters, organised into a clear path. Start anywhere, or pick up right where you left off."/><div className="learning-summary">
-  <div><span className="summary-icon summary-violet"><BookOpen size={19}/></span><span><strong>14 chapters</strong><small>The full learning journey</small></span></div>
-  <div><span className="summary-icon summary-mint"><Sparkles size={19}/></span><span><strong>{done} completed</strong><small>Foundations in place</small></span></div>
-  <div><span className="summary-icon summary-orange"><Clock3 size={19}/></span><span><strong>{active} in progress</strong><small>Keep building momentum</small></span></div>
-  <div><span className="summary-icon summary-blue"><Layers3 size={19}/></span><span><strong>6 topic areas</strong><small>Explore by concept</small></span></div>
- </div><ChapterExplorer/></>;
+  return <>
+    <PageHeading eyebrow="LEARN AT YOUR OWN PACE" title="Your learning space." description="The chapter browser and lesson structure are ready. The actual chapters and study material will be added later." />
+    <section className="empty-content-panel">
+      <div className="empty-content-art"><BookOpen size={35}/><span>∑</span><i/></div>
+      <span className="eyebrow">CHAPTER LIBRARY</span>
+      <h2>Ready for your first chapter.</h2>
+      <p>No chapters or lesson data have been added. When you provide your notes and chapter structure, this space will become your searchable learning library.</p>
+      <div className="empty-feature-row"><span><Search size={15}/> Chapter search</span><span><FolderPlus size={15}/> Topic folders</span><span><Sparkles size={15}/> Lesson layouts</span></div>
+      <Link href="/math-lab" className="button button-primary">Explore Math Lab <ArrowUpRight size={15}/></Link>
+    </section>
+    <div className="empty-skeleton-grid" aria-hidden="true"><div/><div/><div/></div>
+  </>;
 }

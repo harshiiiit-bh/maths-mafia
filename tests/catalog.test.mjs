@@ -1,29 +1,30 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 
-const chapters = JSON.parse(await readFile(new URL("../data/chapters.json", import.meta.url), "utf8"));
-
-test("chapter catalogue contains fourteen unique routes", () => {
-  assert.equal(chapters.length, 14);
-  assert.equal(new Set(chapters.map((item) => item.slug)).size, 14);
-  assert.ok(chapters.every((item) => /^[a-z0-9-]+$/.test(item.slug)));
-});
-
-test("every chapter has valid card and detail metadata", () => {
-  for (const item of chapters) {
-    assert.ok(item.title && item.subtitle && item.description && item.formula);
-    assert.ok(item.topics > 0 && item.minutes > 0);
-    assert.ok(item.progress >= 0 && item.progress <= 100);
-    assert.ok(["Completed", "In progress", "Ready to start"].includes(item.status));
+test("project intentionally contains no seeded content fixtures", async () => {
+  for (const path of ["../data/chapters.json", "../data/leaderboard.json", "../lib/catalog.ts"]) {
+    await assert.rejects(access(new URL(path, import.meta.url)));
   }
 });
 
-test("chapter numbers are sequential and progress values match statuses", () => {
-  assert.deepEqual(chapters.map((item) => item.number), Array.from({ length: 14 }, (_, index) => index + 1));
-  for (const item of chapters) {
-    if (item.progress === 100) assert.equal(item.status, "Completed");
-    if (item.progress > 0 && item.progress < 100) assert.equal(item.status, "In progress");
-    if (item.progress === 0) assert.equal(item.status, "Ready to start");
+test("learning and progress pages use empty states instead of sample records", async () => {
+  const learn = await readFile(new URL("../app/(platform)/learn/page.tsx", import.meta.url), "utf8");
+  const progress = await readFile(new URL("../app/(platform)/progress/page.tsx", import.meta.url), "utf8");
+  const leaderboard = await readFile(new URL("../app/(platform)/leaderboard/page.tsx", import.meta.url), "utf8");
+  assert.match(learn, /No chapters or lesson data have been added/);
+  assert.match(progress, /No sessions, streaks, scores or completion records/);
+  assert.match(leaderboard, /No student accounts, names, XP or ranking records/);
+});
+
+test("no demo user names or seeded question banks remain in the interface", async () => {
+  const files = [
+    "../app/(platform)/dashboard/page.tsx",
+    "../app/(platform)/leaderboard/page.tsx",
+    "../components/feature-workspaces.tsx"
+  ];
+  for (const path of files) {
+    const source = await readFile(new URL(path, import.meta.url), "utf8");
+    assert.doesNotMatch(source, /Aarav Mehta|Ananya Singh|Vihaan Rao|1,280 XP|const questions = \[/);
   }
 });
